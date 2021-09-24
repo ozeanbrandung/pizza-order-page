@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useCallback, useState } from 'react';
+import { Route, Switch } from 'react-router';
+import { Header } from './components';
+import { Home, Cart } from './pages';
+//npm install axios
+import axios from 'axios';
+
 
 function App() {
+  const [pizzasData, setPizzasData] = useState([])
+
+  const request = useCallback(async() => {
+    //FETCH:
+    //const response = await fetch('http://localhost:3000/bd.json')
+    //if (!response.ok) {
+    //  throw new Error('Error fetching data!')
+    //}
+    //без json будет нечитабельно на человеческом языке!
+    //const body = await response.json();
+    //console.log(body)
+    //setPizzasData(body.pizzas)
+
+    //AXIOS:
+    const response = await axios.get('http://localhost:3000/bd.json')
+    console.log(response)
+    if (!response.statusText === 'OK') {
+      throw new Error('Error fetching data!')
+    }
+    setPizzasData(response.data.pizzas)
+  }, [])
+
+  useEffect(()=>{
+    request()
+  }, [request])
+
+  //console.log(pizzasData)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <Header />
+      <div className="content">
+        <Switch>
+          <Route path="/" exact render={()=> <Home pizzas={pizzasData}/>} />
+          <Route path="/cart" exact component={Cart} />
+          <Route render={()=> <h1 style={{textAlign: 'center'}}>404 not found</h1>} />
+        </Switch>
+      </div>
     </div>
   );
 }
