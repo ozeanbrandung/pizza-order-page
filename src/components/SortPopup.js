@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
+import {connect} from 'react-redux'
+//actions
+import {setSorting} from '../redux/actions'
 
-function SortPopup({ items }) {
+function SortPopup({ items, currentSorting, setCurrentSorting }) {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const sortRef = useRef();
   //вместо: const sort = document.querySelector('.sort__popup');
 
-  const [currentSorting, setCurrentSorting] = useState(0);
+  //const [currentSorting, setCurrentSorting] = useState(0);
 
-  const handleOptionClick = idx => {
-    setCurrentSorting(idx)
-    console.log(currentSorting)
+  const handleOptionClick = name => {
+    setCurrentSorting(name)
+    //console.log(currentSorting)
   }
 
   const handleOutsideClick = (event) => {
@@ -29,11 +32,11 @@ function SortPopup({ items }) {
   }, []);
 
   const sortingOptions = items && items.map((item, idx) => (
-    <li className={`${currentSorting === idx ? 'active' : ''}`} 
+    <li className={`${currentSorting === item.type ? 'active' : ''}`} 
         key={`${item}_${idx}`}
-        onClick={(event) => handleOptionClick(idx)}
+        onClick={(event) => handleOptionClick(item.type)}
     >
-      {item}
+      {item.name}
     </li>
   ));
 
@@ -49,7 +52,9 @@ function SortPopup({ items }) {
     setVisiblePopup((visiblePopup) => !visiblePopup);
   };
   
-  const activeSortingOption = items[currentSorting];
+  const activeSortingOption = items.find((item, idx) => item.type === currentSorting).name
+
+  //console.log(activeSortingOption)
 
   //ref={elem => sortRef.current = elem} или ref={sortRef}
   return (
@@ -77,4 +82,13 @@ function SortPopup({ items }) {
   );
 }
 
-export default SortPopup;
+const mapStateToProps = state => ({
+  currentSorting: state.filters.sortBy
+})
+
+const mapDispatchToProps = dispatch => ({
+  //присваиваем имени setCurrentSorting функцию которая диспатчит action а потом ее вызываем в компоненте
+  setCurrentSorting: idx => dispatch(setSorting(idx))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortPopup);

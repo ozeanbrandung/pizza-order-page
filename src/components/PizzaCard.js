@@ -6,7 +6,7 @@ import classNames from 'classnames';
 //className={`${activeType === idx ? 'active' : ''} 
 //${(types.length === 1 && !types.includes(idx)) ? 'disabled' : '' }`} 
 
-function PizzaCard({ id, imageUrl, name, types, sizes, prise }) {
+function PizzaCard({ id, imageUrl, name, types, sizes, price }) {
   //const { id, imageUrl, name, types, sizes, prise } = pizza;
   //console.log(sizes)
 
@@ -56,7 +56,7 @@ function PizzaCard({ id, imageUrl, name, types, sizes, prise }) {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {prise} ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
