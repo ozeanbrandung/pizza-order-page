@@ -2,11 +2,12 @@ import {useState} from 'react';
 //npm install prop-types
 import propTypes from 'prop-types'
 import classNames from 'classnames';
+import Button from './ui/Button';
 //вместо этой дичи:
 //className={`${activeType === idx ? 'active' : ''} 
 //${(types.length === 1 && !types.includes(idx)) ? 'disabled' : '' }`} 
 
-function PizzaCard({ id, imageUrl, name, types, sizes, price }) {
+function PizzaCard({ id, imageUrl, name, types, sizes, price, onAddToCart, pizzasInCartCount }) {
   //const { id, imageUrl, name, types, sizes, prise } = pizza;
   //console.log(sizes)
 
@@ -21,6 +22,13 @@ function PizzaCard({ id, imageUrl, name, types, sizes, price }) {
   const avalibleSizes = [26, 30, 40]
   const onSelectSize = size => {
     setActiveSize(size)
+  }
+
+  const handleAddOnClick = event => {
+    const objForCart = {
+      id, imageUrl, name, price, size: activeSize, type: activeType === 0 ? 'тонкое' : 'традиционное'
+    }
+    onAddToCart(objForCart)
   }
 
   return (
@@ -57,7 +65,8 @@ function PizzaCard({ id, imageUrl, name, types, sizes, price }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <Button className='button--add' outline onClick={handleAddOnClick}>
+        {/* <div className="button button--outline button--add"> */}
           <svg
             width="12"
             height="12"
@@ -70,8 +79,8 @@ function PizzaCard({ id, imageUrl, name, types, sizes, price }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {pizzasInCartCount && <i>{pizzasInCartCount}</i>}
+        </Button>
       </div>
     </div>
   );

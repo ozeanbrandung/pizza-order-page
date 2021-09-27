@@ -9,6 +9,7 @@ const Button = ({onClick, className, outline, children}) => {
       className={classNames('button', className, {
         //если в пропсы передано св-во outline - применить класс
         'button--outline': outline,
+        //'button--add': add,
       })}>
       {children}
     </button>

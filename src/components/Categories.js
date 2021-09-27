@@ -3,7 +3,6 @@
 //import activeClassName from 'react-router';
 import React from 'react';
 import propTypes from 'prop-types';
-import classNames from 'classnames';
 
 
 const Categories = React.memo(function Categories({ activeCategory, items, onSelectCategory }){
@@ -46,12 +45,12 @@ const Categories = React.memo(function Categories({ activeCategory, items, onSel
   );
 })
 
-Categories.propTypes = {
-  activeCategory: propTypes.number.isRequired,
-  items: propTypes.arrayOf(propTypes.object).isRequired,
-  onSelectCategory: propTypes.func
-}
+//Categories.propTypes = {
+  //activeCategory: propTypes.number.isRequired,
+  //items: propTypes.arrayOf(propTypes.object).isRequired,
+  //onSelectCategory: propTypes.func
+//}
 
-Categories.defaultProps = {activeCategory: 0, items: []}
+//Categories.defaultProps = {activeCategory: 0, items: []}
 
 export default Categories;

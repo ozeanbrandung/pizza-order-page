@@ -4,9 +4,6 @@ import { Header } from './components';
 import { Home, Cart } from './pages';
 //npm install axios
 //import axios from 'axios';
-import { useDispatch } from 'react-redux';
-
-import { useEffect } from 'react';
 
 function App() {
   //const [pizzasData, setPizzasData] = useState([])

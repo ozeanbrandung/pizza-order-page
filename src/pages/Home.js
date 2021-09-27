@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 //actions
 import Preloader from '../components/ui/Preloader';
 import ErrorIndicator from '../components/ui/ErrorIndicator';
-import { setCategory, startLoading } from '../redux/actions';
-import React, {useEffect} from 'react';
+import { addPizzaToCart, setCategory } from '../redux/actions';
+import React, { useEffect } from 'react';
 import { sendRequest, setSorting } from '../redux/actions';
 
 //чтобы не было перерендера категорий
@@ -24,26 +24,39 @@ const Home = () => {
     requesting: fetch.requesting,
     failure: fetch.failure,
     sortBy: filters.sortBy,
-    category: filters.category
+    category: filters.category,
   }));
+
+  const cartItems = useSelector(({cart}) => cart.items)
   //console.log(statePiece)
   //const {pizzas, requesting, failure, sortBy} = statePiece;
   //console.log(sortBy, category)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //компонент при переходе в корзину в отличие от app уничтожается
-    //и чтобы каждый раз запрос на сервак не делать за пиццами, проверим 
+    //и чтобы каждый раз запрос на сервак не делать за пиццами, проверим
     //сохранен ли у нас в redux список пицц
     //if (!pizzas.length) {
-      //dispatch(request())
-      dispatch(sendRequest(category, sortBy));
+    //dispatch(request())
+    dispatch(sendRequest(category, sortBy));
     //}
     //sendRequestToBase()
   }, [dispatch, category, sortBy]);
 
+  const dispatchPizzaToStore = pizzaObj => {
+    dispatch(addPizzaToCart(pizzaObj))
+  }
+  console.log(cartItems)
+
   //вместо pizza={pizza} пишем {...pizza} так мы сразу сможем деструктурировать дальше props
-  const pizzasList = pizzas && pizzas.map((pizza) => <PizzaCard key={pizza.id} {...pizza} />);
+  const pizzasList = pizzas && pizzas.map(
+      (pizza) => <PizzaCard key={pizza.id} 
+                            onAddToCart={dispatchPizzaToStore} 
+                            pizzasInCartCount={cartItems[pizza.id] && cartItems[pizza.id].length }
+                            {...pizza} 
+                  />
+    );
 
   //if (requesting) {
   //  return <Preloader/>
@@ -54,17 +67,24 @@ const Home = () => {
   // }
 
   //чтобы категории не менялись опять-таки
-  const selectCategory = React.useCallback(idx => {
-    dispatch(setCategory(idx))
-  }, [])
+  const selectCategory = React.useCallback(
+    (idx) => {
+      dispatch(setCategory(idx));
+    },
+    [dispatch],
+  );
 
-  const selectSorting = React.useCallback(name => {
-    dispatch(setSorting(name))
-  }, [])
-  
+  const selectSorting = React.useCallback(
+    (name) => {
+      dispatch(setSorting(name));
+    },
+    [dispatch],
+  );
 
   const content = !requesting && !failure && <div className="content__items">{pizzasList}</div>;
-  const loadingBlock = Array(12).fill(0).map((_, idx) => <Preloader key={idx}/>)
+  const loadingBlock = Array(12)
+    .fill(0)
+    .map((_, idx) => <Preloader key={idx} />);
   return (
     <div className="container">
       <div className="content__top">

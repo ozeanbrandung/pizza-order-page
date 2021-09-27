@@ -51,3 +51,11 @@ export const setCategory = catIndex => ({
     type: SET_CATEGORY, 
     payload: catIndex
 })
+
+
+export const ADD_TO_CART = 'ADD_TO_CART'
+
+export const addPizzaToCart = (pizzaObj) => ({
+    type: ADD_TO_CART, 
+    payload: pizzaObj
+})
