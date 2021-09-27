@@ -1,19 +1,21 @@
-import { useState, useEffect, useRef } from 'react';
-import {connect} from 'react-redux'
-//actions
-import {setSorting} from '../redux/actions'
+import React, { useState, useEffect, useRef } from 'react';
 
-function SortPopup({ items, currentSorting, setCurrentSorting }) {
+const SortPopup = React.memo(function SortPopup({ items, currentSorting, onSelectSorting }) {
+  console.log(items)
+  //--currentSorting: state.filters.sortBy
+  //const currentSorting = useSelector(state => state.filters.sortBy)
+  //const dispatch = useDispatch()
   const [visiblePopup, setVisiblePopup] = useState(false);
   const sortRef = useRef();
-  //вместо: const sort = document.querySelector('.sort__popup');
+  //--вместо: const sort = document.querySelector('.sort__popup');
 
   //const [currentSorting, setCurrentSorting] = useState(0);
 
-  const handleOptionClick = name => {
-    setCurrentSorting(name)
+  //const handleOptionClick = name => {
+    //setCurrentSorting(name)
+    //dispatch(setSorting(name))
     //console.log(currentSorting)
-  }
+  //}
 
   const handleOutsideClick = (event) => {
     //console.log(event)
@@ -34,7 +36,7 @@ function SortPopup({ items, currentSorting, setCurrentSorting }) {
   const sortingOptions = items && items.map((item, idx) => (
     <li className={`${currentSorting === item.type ? 'active' : ''}`} 
         key={`${item}_${idx}`}
-        onClick={(event) => handleOptionClick(item.type)}
+        onClick={(event) => onSelectSorting(item.type)}
     >
       {item.name}
     </li>
@@ -53,8 +55,6 @@ function SortPopup({ items, currentSorting, setCurrentSorting }) {
   };
   
   const activeSortingOption = items.find((item, idx) => item.type === currentSorting).name
-
-  //console.log(activeSortingOption)
 
   //ref={elem => sortRef.current = elem} или ref={sortRef}
   return (
@@ -80,15 +80,18 @@ function SortPopup({ items, currentSorting, setCurrentSorting }) {
       {visiblePopup && popUp}
     </div>
   );
-}
-
-const mapStateToProps = state => ({
-  currentSorting: state.filters.sortBy
 })
 
-const mapDispatchToProps = dispatch => ({
+//const mapStateToProps = state => ({
+//  currentSorting: state.filters.sortBy
+//})
+
+//const mapDispatchToProps = dispatch => ({
   //присваиваем имени setCurrentSorting функцию которая диспатчит action а потом ее вызываем в компоненте
-  setCurrentSorting: idx => dispatch(setSorting(idx))
-})
+//  setCurrentSorting: name => dispatch(setSorting(name))
+//})
 
-export default connect(mapStateToProps, mapDispatchToProps)(SortPopup);
+//const SortPopupMemo = React.memo();
+
+//export default connect(mapStateToProps, mapDispatchToProps)(SortPopup);
+export default SortPopup;

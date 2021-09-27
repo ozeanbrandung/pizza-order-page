@@ -5,7 +5,7 @@ import { Home, Cart } from './pages';
 //npm install axios
 //import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { sendRequest } from './redux/actions';
+
 import { useEffect } from 'react';
 
 function App() {
@@ -37,12 +37,7 @@ function App() {
 
   //console.log(pizzasData)
 
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    //sendRequestToBase()
-    dispatch(sendRequest());
-  }, [dispatch]);
 
   return (
     <div className="wrapper">
