@@ -2,7 +2,7 @@
 //но только если через <Link> ссылка
 //import activeClassName from 'react-router';
 import React from 'react';
-import propTypes from 'prop-types';
+//import propTypes from 'prop-types';
 
 
 const Categories = React.memo(function Categories({ activeCategory, items, onSelectCategory }){

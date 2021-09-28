@@ -47,16 +47,15 @@ const Home = () => {
   const dispatchPizzaToStore = pizzaObj => {
     dispatch(addPizzaToCart(pizzaObj))
   }
-  console.log(cartItems)
 
   //вместо pizza={pizza} пишем {...pizza} так мы сразу сможем деструктурировать дальше props
-  const pizzasList = pizzas && pizzas.map(
-      (pizza) => <PizzaCard key={pizza.id} 
+  const pizzasList = pizzas && pizzas.map((pizza) => { 
+                  return <PizzaCard key={pizza.id} 
                             onAddToCart={dispatchPizzaToStore} 
-                            pizzasInCartCount={cartItems[pizza.id] && cartItems[pizza.id].length }
-                            {...pizza} 
-                  />
-    );
+                            pizzasInCartCount={cartItems && cartItems[pizza.id] && cartItems[pizza.id].length }
+                            {...pizza} /> 
+                  }
+  );
 
   //if (requesting) {
   //  return <Preloader/>
