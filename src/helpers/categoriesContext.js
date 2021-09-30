@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import PropTypes from 'prop-types';
 
 export const CategoriesContext = createContext({
   areCategoriesOpen: true,
@@ -20,8 +19,5 @@ const CategoriesState = ({ children }) => {
   );
 };
 
-// CategoriesState.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
 
 export default CategoriesState;

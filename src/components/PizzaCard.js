@@ -1,15 +1,9 @@
 import {useState} from 'react';
-//npm install prop-types
 import propTypes from 'prop-types'
 import classNames from 'classnames';
 import Button from './ui/Button';
-//вместо этой дичи:
-//className={`${activeType === idx ? 'active' : ''} 
-//${(types.length === 1 && !types.includes(idx)) ? 'disabled' : '' }`} 
 
 function PizzaCard({ id, imageUrl, name, types, sizes, price, onAddToCart, pizzasInCartCount }) {
-  //const { id, imageUrl, name, types, sizes, prise } = pizza;
-  //console.log(sizes)
 
   const [activeType, setActiveType] = useState(types[0])
   const avalibaleTypes = ['тонкое', 'традиционное'];
@@ -66,7 +60,6 @@ function PizzaCard({ id, imageUrl, name, types, sizes, price, onAddToCart, pizza
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
         <Button className='button--add' outline onClick={handleAddOnClick}>
-        {/* <div className="button button--outline button--add"> */}
           <svg
             width="12"
             height="12"
@@ -87,7 +80,6 @@ function PizzaCard({ id, imageUrl, name, types, sizes, price, onAddToCart, pizza
 }
 
 PizzaCard.propTypes = {
-  //без isRequired библиотека допускает передачу null и undefined
   name: propTypes.string.isRequired, 
   imageUrl: propTypes.string.isRequired, 
   price: propTypes.number.isRequired, 
@@ -95,8 +87,6 @@ PizzaCard.propTypes = {
   sizes: propTypes.arrayOf(propTypes.number).isRequired,
 }
 
-//в общем если стоит isRequred это не особо нужно
-//но зато компонент не сломается без массивов например
 PizzaCard.defaultProps = {
   name: '---',
   price: 0, 

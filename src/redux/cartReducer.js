@@ -1,7 +1,6 @@
 import { ADD_TO_CART, CLEAR_CART, CLEAR_ROW, DEC_PIZZA } from "./actions";
 
 const initialState = {
-    //объект в котором есть ключи и для каждого ключа массив объектов
     itemsInCart: {}, 
     totalPrice: 0, 
     totalCount: 0
@@ -15,11 +14,6 @@ const findEqualElemInCartRow = (initialArr, itemToAdd) => {
 }
 
 const createArrayToReplace = (initialArr, itemToAdd) => {
-
-    //const idxOfPlaceToAdd = initialArr.findIndex((arrItem) => 
-        //arrItem.type === itemToAdd.type && arrItem.size === itemToAdd.size)
-
-    //const itemToReplace = initialArr[idxOfPlaceToAdd]
 
     const {idxOfPlaceToAdd, itemToReplace} = findEqualElemInCartRow(initialArr, itemToAdd)
 
@@ -62,7 +56,6 @@ export const cartReducer = (prevState = initialState, action) => {
             ! initialArr
             ? [itemToAdd]
             : createArrayToReplace(initialArr, itemToAdd)
-            //: [...prevState.itemsInCart[action.payload.id], action.payload]
 
             const updatedItemsObject = {
                 ...prevState.itemsInCart,
@@ -73,14 +66,7 @@ export const cartReducer = (prevState = initialState, action) => {
                 ...prevState, 
                 itemsInCart: updatedItemsObject, 
                 totalPrice: prevState.totalPrice + action.payload.price || action.payload.rowPrice,
-                //вариант со стрима:  
-                //const arrayOfAllPizzas = [].concat.apply([], Object.values(updatedItemsObject)) -- вынести над return
-                //totalPrice: arrayOfAllPizzas.reduce((sum, pizzaObj) => pizzaObj.price + sum, 0),
-                
                 totalCount: prevState.totalCount + 1
-                //вариант со стрима: 
-                //const arrayOfAllPizzas = [].concat.apply([], Object.values(updatedItemsObject)) -- вынести над return
-                //totalCount: arrayOfAllPizzas.length
             }
         }
         case CLEAR_CART: {

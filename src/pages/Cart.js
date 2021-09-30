@@ -1,27 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import {CartItem} from "../components";
 import EmptyCart from "../components/EmptyCart";
-import { addPizzaToCart as addPizzaToCartAC, clearCartAC, clearRowAC, decPizzaAC, setSorting } from "../redux/actions";
+import { addPizzaToCart as addPizzaToCartAC, clearCartAC, clearRowAC, decPizzaAC } from "../redux/actions";
 import {Link} from 'react-router-dom'
+
 function Cart({setCartIsOpen}) {
 
   const {itemsInCart, totalCount, totalPrice} = useSelector(({cart})=> cart)
   const dispatch = useDispatch();
 
-  //console.log(itemsInCart)
   const allAddedPizzas = itemsInCart && Object.values(itemsInCart)
-  //console.log(allAddedPizzas)
 
-  //const pizzas = Object.keys(items).map( key => items[key][0])
-
-  //console.log(allAddedPizzas)
-
-
-  //allAddedPizzas.map(addedPizza => 
-  // addedPizza.map(
-  //   pizzaObj => <CartItem name={pizzaObj.name} type={pizzaObj.type} size={pizzaObj.size} price={pizzaObj.price} count={1}/>
-  // )
- //)
   const listOfCartItems = allAddedPizzas.map(pizzasOfOneName => pizzasOfOneName.map(
                        (pizzaInCartItem, idx) => <CartItem
                        key={`${pizzaInCartItem}_${idx}`} 
@@ -51,7 +40,7 @@ function Cart({setCartIsOpen}) {
       </span>
     </div>
     <div className="cart__bottom-buttons">
-      <a href="/" className="button button--outline button--add go-back-btn">
+      <Link to='/' onClick={() => setCartIsOpen(false)} className="button button--outline button--add go-back-btn">
         <svg
           width="8"
           height="14"
@@ -66,10 +55,8 @@ function Cart({setCartIsOpen}) {
             strokeLinejoin="round"
           />
         </svg>
-        <Link to='/' onClick={() => setCartIsOpen(false)}>
-                    <span>Вернуться назад</span>
+           <span>Вернуться назад</span>
         </Link>
-      </a>
       <div className="button pay-btn">
         <span>Оплатить сейчас</span>
       </div>

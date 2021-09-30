@@ -1,25 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const SortPopup = React.memo(function SortPopup({ items, currentSorting, onSelectSorting }) {
-  console.log(items)
-  //--currentSorting: state.filters.sortBy
-  //const currentSorting = useSelector(state => state.filters.sortBy)
-  //const dispatch = useDispatch()
   const [visiblePopup, setVisiblePopup] = useState(false);
   const sortRef = useRef();
-  //--вместо: const sort = document.querySelector('.sort__popup');
-
-  //const [currentSorting, setCurrentSorting] = useState(0);
-
-  //const handleOptionClick = name => {
-    //setCurrentSorting(name)
-    //dispatch(setSorting(name))
-    //console.log(currentSorting)
-  //}
 
   const handleOutsideClick = (event) => {
-    //console.log(event)
-    //console.log(sortRef.current)
     const path = event.path || (event.composedPath && event.composedPath());
     if (!path.includes(sortRef.current)) {
       setVisiblePopup(false);
@@ -28,10 +13,6 @@ const SortPopup = React.memo(function SortPopup({ items, currentSorting, onSelec
 
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick);
-    //return () => {
-    //    cleanup
-    //}
-  //только при первом клике вешается на body обработчик событий!
   }, []);
 
   const sortingOptions = items && items.map((item, idx) => (
@@ -57,7 +38,6 @@ const SortPopup = React.memo(function SortPopup({ items, currentSorting, onSelec
   
   const activeSortingOption = items.find((item, idx) => item.type === currentSorting).name
 
-  //ref={elem => sortRef.current = elem} или ref={sortRef}
   return (
     <div className="sort" ref={sortRef}>
       <div className="sort__label">
@@ -86,16 +66,4 @@ const SortPopup = React.memo(function SortPopup({ items, currentSorting, onSelec
   );
 })
 
-//const mapStateToProps = state => ({
-//  currentSorting: state.filters.sortBy
-//})
-
-//const mapDispatchToProps = dispatch => ({
-  //присваиваем имени setCurrentSorting функцию которая диспатчит action а потом ее вызываем в компоненте
-//  setCurrentSorting: name => dispatch(setSorting(name))
-//})
-
-//const SortPopupMemo = React.memo();
-
-//export default connect(mapStateToProps, mapDispatchToProps)(SortPopup);
 export default SortPopup;

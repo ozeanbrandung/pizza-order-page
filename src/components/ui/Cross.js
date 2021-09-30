@@ -2,14 +2,11 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CategoriesContext } from '../../helpers/categoriesContext';
 
-function Cross() {
-    const CrossButton = styled.button`
+const CrossButton = styled.button`
         display: block;
         padding: 12px;
         background: none;
-        //outline: 0; что это?
         border: 0;
-        //или лучше через марджин?
         padding-top: 25px;
         padding-bottom: 25px;
         padding-left: 16%;
@@ -33,7 +30,9 @@ function Cross() {
         background-color: black;
     `;
 
-    const { areCategoriesOpen, toggleCategoriesMode } = useContext(CategoriesContext);
+function Cross() {
+
+    const { toggleCategoriesMode } = useContext(CategoriesContext);
 
     const clickHandler = () => {
         toggleCategoriesMode();

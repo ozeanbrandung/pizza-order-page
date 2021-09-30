@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-//import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { CategoriesContext } from '../helpers/categoriesContext';
 import Cross from './ui/Cross';
@@ -29,7 +28,6 @@ const Menu = styled.ul`
     `}
 `;
 
-//background-image: url(${arrow});
 export const MenuLink = styled.li`
   @media (max-width: 360px) {
     padding-top: 10px;
@@ -85,18 +83,3 @@ export const SideOverlayCategoriesMenu = ({ categories, activeCategory, onSelect
       {categoriesList}
   </Menu>);
 };
-
-// SideOverlayCategoriesMenu.propTypes = {
-//   children: PropTypes.node,
-// };
-
-// SideOverlayCategoriesMenu.defaultProps = {
-//   children: (
-//     <>
-//       <MenuLink href="/">Главная</MenuLink>
-//       <MenuLink href="/articles">Статьи</MenuLink>
-//       <MenuLink href="/about">О сайте</MenuLink>
-//       <MenuLink href="/contact">Контакт</MenuLink>
-//     </>
-//   ),
-// };

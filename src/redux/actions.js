@@ -17,18 +17,10 @@ export const failure = () => ({
     type: FAILURE
 })
 
-//export const sendRequest = () => {
-//    return async (dispatch) => {
 export const sendRequest = (category, sortBy) => async (dispatch) => {
-        //npm install --include=dev json-server
         try {
-            //скобки опяь у экшена забыла, ну!
             dispatch(request())
-            //console.log(category, sortBy.toUpperCase())
             const response = await axios
-            //из-за того что в packege.json добавили "proxy": " http://localhost:3001",",
-            //можем убрать явное указание адреса сервера, обращение будлет происходить по умолчанию
-            //.get(`http://localhost:3001/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy}&_order=asc`)
             .get(`/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy}&_order=asc`)
             if (!response.statusText === 'OK') {
                 throw new Error('Error fetching data!')

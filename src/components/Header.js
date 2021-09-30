@@ -2,18 +2,10 @@ import logoIcon from '../assets/img/pizza-logo.svg';
 import Button from './ui/Button';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-//import {useState} from 'react';
 
 function Header({cartIsOpen, setCartIsOpen}) {
-  //возвращаем именно объект!
-  //const {totalPrice, totalCount} = useSelector(({cart}) =>({ 
-  //  totalPrice: cart.totalPrice, 
-  //  totalCount: cart.totalCount
-  //}))
-  //более коротка записьЖ
+
   const {totalPrice, totalCount} = useSelector(({cart}) => cart )
- 
-  //console.log(cartIsOpen)
 
   const cartButton = (
     <Link to="/cart" onClick={() => setCartIsOpen(true)}>
@@ -56,7 +48,7 @@ function Header({cartIsOpen, setCartIsOpen}) {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/" onClick={() => setCartIsOpen(false)}>
           <div className="header__logo">
             <img width="38" src={logoIcon} alt="Pizza logo" />
             <div>

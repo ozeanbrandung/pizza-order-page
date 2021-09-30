@@ -8,7 +8,6 @@ import { Categories } from '.';
 
 const Navbar = styled.div`
   display: flex;
-  //position: fixed;
   left: 0;
   right: 0;
   box-sizing: border-box;
@@ -21,13 +20,8 @@ const Navbar = styled.div`
   min-width: 0px;
   min-height: 0px;
   flex-direction: row;
-    //justify-content: flex-start;
-    justify-content: space-between;
-  //padding: 6px 60px;
+  justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px;
-  //box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 0px;
-  //box-shadow: 0px 8px 8px -8px rgba(34, 60, 80, 0.6);
-  //box-shadow: 0px 6px 15px -10px rgba(34, 60, 80, 0.6);
   z-index: 500;
   padding: 0 4%
 `;
@@ -35,8 +29,8 @@ const Navbar = styled.div`
 const CategoriesMenu = ({children, categories, activeCategory, onSelectCategory}) => {
   const node = useRef();
   const { areCategoriesOpen, toggleCategoriesMode } = useContext(CategoriesContext);
+  
   useOnClickOutside(node, () => {
-    // Only if menu is open
     if (areCategoriesOpen) {
         toggleCategoriesMode();
     }
