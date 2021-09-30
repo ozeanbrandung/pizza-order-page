@@ -12,11 +12,13 @@ function EmptyCart({setCartIsOpen}) {
               Для того, чтобы заказать пиццу, перейди на главную страницу.
             </p>
             <img src={emptyCartImage} alt="Empty cart" />
-            <Button className='button--black'> 
-                <Link to='/' onClick={() => setCartIsOpen(false)}>
-                    <span>Вернуться назад</span>
-                </Link>
-            </Button>
+            <Link to='/' onClick={() => setCartIsOpen(false)}>
+              <Button className='button--black'> 
+                  
+                      <span>Вернуться назад</span>
+                  
+              </Button>
+            </Link>
           </div>
         </div>
     )
