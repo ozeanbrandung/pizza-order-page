@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import {CartItem} from "../components";
-import { addPizzaToCart as addPizzaToCartAC, clearCartAC, clearRowAC, decPizzaAC } from "../redux/actions";
-
-function Cart() {
+import EmptyCart from "../components/EmptyCart";
+import { addPizzaToCart as addPizzaToCartAC, clearCartAC, clearRowAC, decPizzaAC, setSorting } from "../redux/actions";
+import {Link} from 'react-router-dom'
+function Cart({setCartIsOpen}) {
 
   const {itemsInCart, totalCount, totalPrice} = useSelector(({cart})=> cart)
   const dispatch = useDispatch();
@@ -14,6 +15,67 @@ function Cart() {
   //const pizzas = Object.keys(items).map( key => items[key][0])
 
   //console.log(allAddedPizzas)
+
+
+  //allAddedPizzas.map(addedPizza => 
+  // addedPizza.map(
+  //   pizzaObj => <CartItem name={pizzaObj.name} type={pizzaObj.type} size={pizzaObj.size} price={pizzaObj.price} count={1}/>
+  // )
+ //)
+  const listOfCartItems = allAddedPizzas.map(pizzasOfOneName => pizzasOfOneName.map(
+                       (pizzaInCartItem, idx) => <CartItem
+                       key={`${pizzaInCartItem}_${idx}`} 
+                       name={pizzaInCartItem.name} 
+                       type={pizzaInCartItem.type} 
+                       size={pizzaInCartItem.size} 
+                       price={pizzaInCartItem.rowPrice} 
+                       count={pizzaInCartItem.rowCount}
+                       onDecPizzaItem={()=> dispatch(decPizzaAC(pizzaInCartItem))}
+                       onClearPizzasRow={()=> dispatch(clearRowAC(pizzaInCartItem))}
+                       onAddPizzaToCart={() => dispatch(addPizzaToCartAC(pizzaInCartItem))}/>
+                     )
+           )
+
+  const filledCart = (<>
+  <div className="content__items">
+    {listOfCartItems}
+  </div>
+
+  <div className="cart__bottom">
+    <div className="cart__bottom-details">
+      <span>
+        Всего пицц: <b>{totalCount} шт.</b>
+      </span>
+      <span>
+        Сумма заказа: <b>{totalPrice} ₽</b>
+      </span>
+    </div>
+    <div className="cart__bottom-buttons">
+      <a href="/" className="button button--outline button--add go-back-btn">
+        <svg
+          width="8"
+          height="14"
+          viewBox="0 0 8 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M7 13L1 6.93015L6.86175 1"
+            stroke="#D3D3D3"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <Link to='/' onClick={() => setCartIsOpen(false)}>
+                    <span>Вернуться назад</span>
+        </Link>
+      </a>
+      <div className="button pay-btn">
+        <span>Оплатить сейчас</span>
+      </div>
+    </div>
+  </div>
+ </> )
 
   return (
     <div>
@@ -51,6 +113,7 @@ function Cart() {
               </svg>
               Корзина
             </h2>
+            {allAddedPizzas.length > 0 && 
             <div className="cart__clear">
               <svg
                 width="20"
@@ -89,64 +152,11 @@ function Cart() {
               </svg>
 
               <span onClick={()=> dispatch(clearCartAC())}>Очистить корзину</span>
-            </div>
+            </div>}
           </div>
-          <div className="content__items">
-
-            {//allAddedPizzas.map(addedPizza => 
-             // addedPizza.map(
-             //   pizzaObj => <CartItem name={pizzaObj.name} type={pizzaObj.type} size={pizzaObj.size} price={pizzaObj.price} count={1}/>
-             // )
-            //)
-             allAddedPizzas.map(pizzasOfOneName => pizzasOfOneName.map(
-                                  (pizzaInCartItem, idx) => <CartItem
-                                  key={`${pizzaInCartItem}_${idx}`} 
-                                  name={pizzaInCartItem.name} 
-                                  type={pizzaInCartItem.type} 
-                                  size={pizzaInCartItem.size} 
-                                  price={pizzaInCartItem.rowPrice} 
-                                  count={pizzaInCartItem.rowCount}
-                                  onDecPizzaItem={()=> dispatch(decPizzaAC(pizzaInCartItem))}
-                                  onClearPizzasRow={()=> dispatch(clearRowAC(pizzaInCartItem))}
-                                  onAddPizzaToCart={() => dispatch(addPizzaToCartAC(pizzaInCartItem))}/>
-                                )
-                      )
-            }
-
-          </div>
-          <div className="cart__bottom">
-            <div className="cart__bottom-details">
-              <span>
-                Всего пицц: <b>{totalCount} шт.</b>
-              </span>
-              <span>
-                Сумма заказа: <b>{totalPrice} ₽</b>
-              </span>
-            </div>
-            <div className="cart__bottom-buttons">
-              <a href="/" className="button button--outline button--add go-back-btn">
-                <svg
-                  width="8"
-                  height="14"
-                  viewBox="0 0 8 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M7 13L1 6.93015L6.86175 1"
-                    stroke="#D3D3D3"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <span>Вернуться назад</span>
-              </a>
-              <div className="button pay-btn">
-                <span>Оплатить сейчас</span>
-              </div>
-            </div>
-          </div>
+          {allAddedPizzas.length > 0 && filledCart} 
+          {allAddedPizzas.length === 0 && <EmptyCart setCartIsOpen={setCartIsOpen}/>}
+          
         </div>
       </div>
     </div>

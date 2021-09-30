@@ -7,6 +7,8 @@ import ErrorIndicator from '../components/ui/ErrorIndicator';
 import { addPizzaToCart, setCategory } from '../redux/actions';
 import React, { useEffect } from 'react';
 import { sendRequest, setSorting } from '../redux/actions';
+import CategoriesMenu from '../components/CategoriesMenu';
+import CategoriesState from '../helpers/categoriesContext';
 
 //чтобы не было перерендера категорий
 const categories = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
@@ -85,24 +87,40 @@ const Home = () => {
     .fill(0)
     .map((_, idx) => <Preloader key={idx} />);
   return (
-    <div className="container">
-      <div className="content__top">
-        <Categories
+    <div >
+      {/* <div className="content__top"> */}
+      <CategoriesState>
+        <CategoriesMenu 
+                      onSelectCategory={selectCategory}
+                      categories={categories}
+                      activeCategory={category}
+        >
+          <SortPopup
+            items={popupSortingCategories}
+            currentSorting={sortBy}
+            onSelectSorting={selectSorting}
+          /> 
+        </CategoriesMenu>
+      </CategoriesState>
+        {/* <Categories
           //чтобы не было постоянного ререндера из-за посступления новой функции
           onSelectCategory={selectCategory}
           //onSelectCategory={(idx) => dispatch(setCategory(idx))}
           items={categories}
           activeCategory={category}
-        />
-        <SortPopup
+        /> */}
+        {/* <SortPopup
           items={popupSortingCategories}
           currentSorting={sortBy}
           onSelectSorting={selectSorting}
-        />
+        /> */}
+      {/* </div> */}
+      <div className='container'>
+        <h2 className="content__title">Все пиццы</h2>
+        {requesting ? loadingBlock : content}
+        {failure && <ErrorIndicator />}
       </div>
-      <h2 className="content__title">Все пиццы</h2>
-      {requesting ? loadingBlock : content}
-      {failure && <ErrorIndicator />}
+      
     </div>
   );
 };

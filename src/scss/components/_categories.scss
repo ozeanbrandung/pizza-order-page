@@ -1,11 +1,21 @@
 @import '../variables';
 
+@media (max-width: 1310px) {
+  .categories {
+    display: none;
+    ul {
+      display: none;
+    }
+  }
+}
+
 .categories {
+  padding: 6px 0;
   ul {
     display: flex;
 
     li {
-      background-color: #f9f9f9;
+      background-color: #282828;
       padding: 13px 30px;
       border-radius: 30px;
       margin-right: 10px;
@@ -23,7 +33,7 @@
       }
 
       &.active {
-        background-color: #282828;
+        background-color: $orange;
         color: #fff;
       }
     }

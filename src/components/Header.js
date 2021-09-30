@@ -2,8 +2,9 @@ import logoIcon from '../assets/img/pizza-logo.svg';
 import Button from './ui/Button';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+//import {useState} from 'react';
 
-function Header() {
+function Header({cartIsOpen, setCartIsOpen}) {
   //возвращаем именно объект!
   //const {totalPrice, totalCount} = useSelector(({cart}) =>({ 
   //  totalPrice: cart.totalPrice, 
@@ -11,21 +12,11 @@ function Header() {
   //}))
   //более коротка записьЖ
   const {totalPrice, totalCount} = useSelector(({cart}) => cart )
+ 
+  //console.log(cartIsOpen)
 
-  return (
-    <div className="header">
-      <div className="container">
-        <Link to="/">
-          <div className="header__logo">
-            <img width="38" src={logoIcon} alt="Pizza logo" />
-            <div>
-              <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
-            </div>
-          </div>
-        </Link>
-        <div className="header__cart">
-          <Link to="/cart">
+  const cartButton = (
+    <Link to="/cart" onClick={() => setCartIsOpen(true)}>
             <Button className="button--cart">
               <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
@@ -60,6 +51,22 @@ function Header() {
               <span>{totalCount}</span>
             </Button>
           </Link>
+  )
+
+  return (
+    <div className="header">
+      <div className="container">
+        <Link to="/">
+          <div className="header__logo">
+            <img width="38" src={logoIcon} alt="Pizza logo" />
+            <div>
+              <h1>React Pizza</h1>
+              <p>самая вкусная пицца во вселенной</p>
+            </div>
+          </div>
+        </Link>
+        <div className="header__cart">
+          {!cartIsOpen && cartButton}
         </div>
       </div>
     </div>
