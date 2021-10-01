@@ -84,7 +84,7 @@ const Home = () => {
       </CategoriesState>
 
       <div className='container'>
-        <h2 className="content__title">Все пиццы</h2>
+        <h2 className="content__title">{category === null ? 'Все пиццы' : categories[category]}</h2>
         {requesting ? loadingBlock : content}
         {failure && <ErrorIndicator />}
       </div>
