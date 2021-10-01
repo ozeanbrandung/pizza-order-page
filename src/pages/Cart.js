@@ -2,9 +2,15 @@ import { useSelector, useDispatch } from "react-redux";
 import {CartItem} from "../components";
 import EmptyCart from "../components/EmptyCart";
 import { addPizzaToCart as addPizzaToCartAC, clearCartAC, clearRowAC, decPizzaAC } from "../redux/actions";
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
-function Cart({setCartIsOpen}) {
+function Cart() {
+
+  const history = useHistory();
+
+  const handleClickGoBack = () => {
+    history.push('/') 
+  }
 
   const {itemsInCart, totalCount, totalPrice} = useSelector(({cart})=> cart)
   const dispatch = useDispatch();
@@ -40,7 +46,7 @@ function Cart({setCartIsOpen}) {
       </span>
     </div>
     <div className="cart__bottom-buttons">
-      <Link to='/' onClick={() => setCartIsOpen(false)} className="button button--outline button--add go-back-btn">
+      <button onClick={() => handleClickGoBack()} className="button button--outline button--add go-back-btn">
         <svg
           width="8"
           height="14"
@@ -56,7 +62,7 @@ function Cart({setCartIsOpen}) {
           />
         </svg>
            <span>Вернуться назад</span>
-        </Link>
+        </button>
       <div className="button pay-btn">
         <span>Оплатить сейчас</span>
       </div>
@@ -141,7 +147,7 @@ function Cart({setCartIsOpen}) {
               <span onClick={()=> dispatch(clearCartAC())}>Очистить корзину</span>
             </div>}
           </div>
-          {allAddedPizzas.flat().length === 0 && <EmptyCart setCartIsOpen={setCartIsOpen}/>}
+          {allAddedPizzas.flat().length === 0 && <EmptyCart/>}
           {allAddedPizzas.flat().length > 0 && filledCart} 
         </div>
       </div>
