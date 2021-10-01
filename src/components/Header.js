@@ -2,13 +2,16 @@ import logoIcon from '../assets/img/pizza-logo.svg';
 import Button from './ui/Button';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {useLocation} from 'react-router-dom'
 
-function Header({cartIsOpen, setCartIsOpen}) {
+function Header() {
+
+  const location = useLocation();
 
   const {totalPrice, totalCount} = useSelector(({cart}) => cart )
 
   const cartButton = (
-    <Link to="/cart" onClick={() => setCartIsOpen(true)}>
+    <Link to="/cart">
             <Button className="button--cart">
               <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
@@ -48,7 +51,7 @@ function Header({cartIsOpen, setCartIsOpen}) {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/" onClick={() => setCartIsOpen(false)}>
+        <Link to="/">
           <div className="header__logo">
             <img width="38" src={logoIcon} alt="Pizza logo" />
             <div>
@@ -58,7 +61,7 @@ function Header({cartIsOpen, setCartIsOpen}) {
           </div>
         </Link>
         <div className="header__cart">
-          {!cartIsOpen && cartButton}
+          {location.pathname === '/' && cartButton}
         </div>
       </div>
     </div>

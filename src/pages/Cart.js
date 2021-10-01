@@ -141,9 +141,8 @@ function Cart({setCartIsOpen}) {
               <span onClick={()=> dispatch(clearCartAC())}>Очистить корзину</span>
             </div>}
           </div>
-          {allAddedPizzas.length > 0 && filledCart} 
-          {allAddedPizzas.length === 0 && <EmptyCart setCartIsOpen={setCartIsOpen}/>}
-          
+          {allAddedPizzas.flat().length === 0 && <EmptyCart setCartIsOpen={setCartIsOpen}/>}
+          {allAddedPizzas.flat().length > 0 && filledCart} 
         </div>
       </div>
     </div>
