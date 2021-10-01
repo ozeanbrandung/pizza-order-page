@@ -4,6 +4,7 @@ import { CategoriesContext } from '../helpers/categoriesContext';
 import Cross from './ui/Cross';
 
 const Menu = styled.ul`
+  height: 100vh;
   position: absolute;
   top: 0px;
   left: 0px;
