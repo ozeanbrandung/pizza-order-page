@@ -7,16 +7,18 @@ const Categories = React.memo(function Categories({ activeCategory, items, onSel
     items.map((item, index) => (
       <li
         onClick={(event) => onSelectCategory(index)}
-        key={`name_${index}`}
+        key={`${item.name}_${index}`}
         className={activeCategory === index ? 'active' : ''}>
         {item}
       </li>
     ));
 
+    console.log(activeCategory)
+
   return (
     <div className="categories">
       <ul>
-        <li onClick={(event) => onSelectCategory(null)} className={activeCategory === null ? 'active' : ''}>Все</li>
+        <li key='dfgdf' onClick={(event) => onSelectCategory(null)} className={activeCategory === null ? 'active' : ''} >Все</li>
         {categories}
       </ul>
     </div>

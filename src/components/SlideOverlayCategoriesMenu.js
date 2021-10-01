@@ -4,7 +4,8 @@ import { CategoriesContext } from '../helpers/categoriesContext';
 import Cross from './ui/Cross';
 
 const Menu = styled.ul`
-  height: 100vh;
+  height: 110vh;
+  //margin-bottom: 110px;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -72,7 +73,7 @@ export const SideOverlayCategoriesMenu = ({ categories, activeCategory, onSelect
   const categoriesList = categories && categories.map((category, idx) => (
                     <MenuLink key={`name_${idx}`}
                               onClick={(event) => onSelectCategory(idx)}
-                              className={activeCategory ? 'active' : ''}
+                              className={activeCategory === idx ? 'active' : ''}
                     >
                       {category}
                     </MenuLink>))
@@ -80,7 +81,7 @@ export const SideOverlayCategoriesMenu = ({ categories, activeCategory, onSelect
   return (
   <Menu open={areCategoriesOpen}>
       <Cross/>
-      <MenuLink onClick={(event) => onSelectCategory(null)} className={activeCategory === null ? 'active' : ''}>Все</MenuLink>
+      <MenuLink key='dfgdffdg' onClick={(event) => onSelectCategory(null)} className={activeCategory === null ? 'active' : ''}>Все</MenuLink>
       {categoriesList}
   </Menu>);
 };
